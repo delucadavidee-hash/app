@@ -1,0 +1,82 @@
+{
+  "users": {},
+  "portfolios": {},
+  "alerts": [],
+  "community_posts": [
+    {
+      "id": "post1",
+      "user": "Marco R.",
+      "avatar": "MR",
+      "time": "3h fa",
+      "content": "Dopo 4 anni di PAC mensile su VWCE, finalmente ho raggiunto i 50k investiti. Lezione piu grande: non guardare il portafoglio tutti i giorni.",
+      "likes": 127,
+      "comments": [
+        {
+          "user": "InvestorPro",
+          "avatar": "IP",
+          "time": "2h fa",
+          "content": "Ottimo risultato! Anche io su VWCE da 3 anni.",
+          "likes": 24
+        },
+        {
+          "user": "LongTermView",
+          "avatar": "LT",
+          "time": "4h fa",
+          "content": "Concordo. Non cercare di fare market timing con il PAC.",
+          "likes": 18
+        }
+      ],
+      "portfolio": {
+        "cagr": 8.9,
+        "vol": 14.2,
+        "assets": 3
+      }
+    },
+    {
+      "id": "post2",
+      "user": "Sara E.",
+      "avatar": "SE",
+      "time": "1g fa",
+      "content": "Chiedo consiglio: ha senso aggiungere un ETF sui mercati di frontiera al mio portafoglio All-World + EM? Quale peso dare?",
+      "likes": 45,
+      "comments": [
+        {
+          "user": "ETFGuru",
+          "avatar": "EG",
+          "time": "6h fa",
+          "content": "Considera di diversificare con un 5-10% di mercati di frontiera.",
+          "likes": 12
+        }
+      ],
+      "portfolio": {
+        "cagr": 7.4,
+        "vol": 13.8,
+        "assets": 2
+      }
+    },
+    {
+      "id": "post3",
+      "user": "Luca F.",
+      "avatar": "LF",
+      "time": "2g fa",
+      "content": "Condivido il mio portafoglio FIRE: SWDA 70%, EIMI 15%, AGGH 10%, SGLD 5%. Obiettivo indipendenza finanziaria entro il 2035.",
+      "likes": 203,
+      "comments": [
+        {
+          "user": "SaraETF",
+          "avatar": "SE",
+          "time": "8h fa",
+          "content": "Complimenti! Quale broker usi per i PAC automatici?",
+          "likes": 7
+        }
+      ],
+      "portfolio": {
+        "cagr": 9.1,
+        "vol": 15.4,
+        "assets": 4
+      }
+    }
+  ],
+  "settings": {},
+  "onboarding": {}
+}
