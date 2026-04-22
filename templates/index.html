@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ETF Tracker - Portafoglio e Analisi ETF</title>
+    <meta name="description" content="Dashboard, backtest, correlazioni, community e manuale finanziario. Tutto in un posto.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- Auth screen -->
+        <div id="auth-screen" class="auth-screen"></div>
+
+        <!-- Onboarding screen -->
+        <div id="onboarding-screen" class="hidden"></div>
+
+        <!-- Tour overlay -->
+        <div id="tour-overlay" class="hidden"></div>
+
+        <!-- Portfolio created screen -->
+        <div id="portfolio-created-screen" class="hidden"></div>
+
+        <!-- Main app -->
+        <div id="main-app" class="hidden">
+            <!-- Header -->
+            <header class="app-header">
+                <div class="header-inner">
+                    <div class="header-spacer"></div>
+                    <div class="logo" onclick="navigateTo('dashboard')">
+                        <div class="logo-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                        </div>
+                        <span class="logo-text">ETF Tracker</span>
+                    </div>
+                    <div class="header-actions">
+                        <div class="avatar-dropdown">
+                            <button class="avatar-btn" id="avatar-btn" onclick="toggleAvatarMenu()">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                            </button>
+                            <div class="avatar-menu hidden" id="avatar-menu">
+                                <div class="avatar-menu-header">
+                                    <p class="avatar-name" id="user-name">Marco Rossi</p>
+                                    <p class="avatar-email" id="user-email">marco@demo.com</p>
+                                </div>
+                                <button onclick="navigateTo('settings'); toggleAvatarMenu();">Profilo</button>
+                                <button onclick="navigateTo('settings'); toggleAvatarMenu();">Impostazioni</button>
+                                <button onclick="startTour(); toggleAvatarMenu();">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                    Avvia tour guidato
+                                </button>
+                                <button onclick="redoOnboarding(); toggleAvatarMenu();">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg>
+                                    Rivedi onboarding
+                                </button>
+                                <button class="logout-btn" onclick="logout()">Esci</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <nav class="main-nav" id="main-nav"></nav>
+            </header>
+
+            <!-- Content -->
+            <main class="main-content" id="main-content"></main>
+
+            <!-- Footer -->
+            <footer class="app-footer">
+                <div class="footer-inner">
+                    <div class="footer-left">
+                        <span>&copy; 2026 ETF Tracker</span>
+                        <span>&middot;</span>
+                        <a href="#" onclick="showTerms()">Termini</a>
+                        <a href="#" onclick="showPrivacy()">Privacy</a>
+                        <a href="#" onclick="showSecurity()">Sicurezza</a>
+                    </div>
+                    <div class="footer-right">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                        <span>Dati protetti con crittografia AES-256</span>
+                    </div>
+                </div>
+            </footer>
+        </div>
+
+        <!-- Modal container -->
+        <div id="modal-container"></div>
+
+        <!-- Toast container -->
+        <div id="toast-container"></div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/data.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/utils.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/charts.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
