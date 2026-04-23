@@ -2,154 +2,82 @@
 // ETF Tracker - Static Data
 // ═══════════════════════════════════════════
 
-const COLORS = {
-    NAVY: '#0A2540', NAVY_DARK: '#061528', NAVY_LIGHT: '#1E3A5F',
-    BLUE: '#1E5AA0', GREEN: '#0F7B3F', GREEN_LIGHT: '#86EFAC',
-    RED: '#B42318', GRAY_50: '#F7F9FC', GRAY_100: '#EDF1F7',
-    GRAY_200: '#DCE3ED', GRAY_400: '#8A94A6', GRAY_600: '#4B5768'
-};
-
 const ETF_DATABASE = [
-    { isin: 'IE00B4L5Y983', ticker: 'SWDA', name: 'iShares Core MSCI World UCITS ETF', issuer: 'iShares', asset: 'Azionario', region: 'Globale Sviluppati', ter: 0.20, aum: 82400, price: 92.45, chg1d: 0.42, chg1y: 14.80, chg5y: 72.30, replication: 'Fisica', distribution: 'Accumulazione', domicile: 'Irlanda', rating: 5 },
-    { isin: 'IE00BK5BQT80', ticker: 'VWCE', name: 'Vanguard FTSE All-World UCITS ETF', issuer: 'Vanguard', asset: 'Azionario', region: 'Globale', ter: 0.22, aum: 18900, price: 118.22, chg1d: 0.38, chg1y: 17.70, chg5y: 68.40, replication: 'Fisica', distribution: 'Accumulazione', domicile: 'Irlanda', rating: 5 },
-    { isin: 'IE00BKM4GZ66', ticker: 'EIMI', name: 'iShares Core MSCI EM IMI UCITS ETF', issuer: 'iShares', asset: 'Azionario', region: 'Emergenti', ter: 0.18, aum: 21300, price: 32.18, chg1d: -0.24, chg1y: 9.40, chg5y: 28.60, replication: 'Fisica', distribution: 'Accumulazione', domicile: 'Irlanda', rating: 4 },
-    { isin: 'IE00B3F81R35', ticker: 'AGGH', name: 'iShares Core Global Aggregate Bond UCITS ETF', issuer: 'iShares', asset: 'Obbligazionario', region: 'Globale', ter: 0.10, aum: 5800, price: 48.32, chg1d: 0.08, chg1y: -2.50, chg5y: -8.20, replication: 'Campionamento', distribution: 'Accumulazione', domicile: 'Irlanda', rating: 4 },
-    { isin: 'IE00B579F325', ticker: 'SGLD', name: 'Invesco Physical Gold ETC', issuer: 'Invesco', asset: 'Commodities', region: 'Globale', ter: 0.12, aum: 16400, price: 195.40, chg1d: 0.92, chg1y: 29.50, chg5y: 82.10, replication: 'Fisica', distribution: 'N/A', domicile: 'Irlanda', rating: 5 },
-    { isin: 'IE00B5BMR087', ticker: 'CSSPX', name: 'iShares Core S&P 500 UCITS ETF', issuer: 'iShares', asset: 'Azionario', region: 'USA', ter: 0.07, aum: 97200, price: 548.30, chg1d: 0.55, chg1y: 18.20, chg5y: 94.50, replication: 'Fisica', distribution: 'Accumulazione', domicile: 'Irlanda', rating: 5 },
-    { isin: 'IE00B53SZB19', ticker: 'SXR8', name: 'iShares Core S&P 500 UCITS ETF (Dist)', issuer: 'iShares', asset: 'Azionario', region: 'USA', ter: 0.07, aum: 8200, price: 72.15, chg1d: 0.54, chg1y: 17.90, chg5y: 91.20, replication: 'Fisica', distribution: 'Distribuzione', domicile: 'Irlanda', rating: 4 },
-    { isin: 'IE00B4WXJJ64', ticker: 'IBTM', name: 'iShares $ Treasury Bond 7-10yr UCITS ETF', issuer: 'iShares', asset: 'Obbligazionario', region: 'USA', ter: 0.07, aum: 5400, price: 193.20, chg1d: 0.14, chg1y: 1.80, chg5y: -6.20, replication: 'Fisica', distribution: 'Distribuzione', domicile: 'Irlanda', rating: 4 },
-    { isin: 'IE00B1FZS798', ticker: 'IDTL', name: 'iShares $ Treasury Bond 20+yr UCITS ETF', issuer: 'iShares', asset: 'Obbligazionario', region: 'USA', ter: 0.07, aum: 1900, price: 3.82, chg1d: 0.22, chg1y: -4.60, chg5y: -28.40, replication: 'Fisica', distribution: 'Accumulazione', domicile: 'Irlanda', rating: 3 },
-    { isin: 'IE00B3VWN518', ticker: 'PHAU', name: 'WisdomTree Physical Gold', issuer: 'WisdomTree', asset: 'Commodities', region: 'Globale', ter: 0.39, aum: 3200, price: 258.40, chg1d: 0.91, chg1y: 29.10, chg5y: 81.60, replication: 'Fisica', distribution: 'N/A', domicile: 'Jersey', rating: 4 },
-    { isin: 'IE00B02KXL92', ticker: 'INDA', name: 'iShares MSCI India UCITS ETF', issuer: 'iShares', asset: 'Azionario', region: 'India', ter: 0.65, aum: 1800, price: 8.92, chg1d: 0.32, chg1y: 16.40, chg5y: 68.80, replication: 'Campionamento', distribution: 'Accumulazione', domicile: 'Irlanda', rating: 3 },
-    { isin: 'IE00BKWQ0G16', ticker: 'USPY', name: 'SPDR S&P 500 UCITS ETF', issuer: 'SPDR', asset: 'Azionario', region: 'USA', ter: 0.03, aum: 13400, price: 62.80, chg1d: 0.56, chg1y: 18.30, chg5y: 94.80, replication: 'Fisica', distribution: 'Accumulazione', domicile: 'Irlanda', rating: 5 },
+    {"isin":"IE00B4L5Y983","ticker":"VWCE","name":"Vanguard FTSE All-World","price":118.50,"chg1d":0.45,"chg1y":12.3,"ter":0.22,"aum":1850000,"asset":"Azionario","region":"Globale","replication":"Fisica","distribution":"Accumulazione","domicile":"Irlanda","issuer":"Vanguard","rating":5,"chg5y":52.0},
+    {"isin":"IE00B4L5YY86","ticker":"IWDA","name":"iShares Core MSCI World","price":85.20,"chg1d":0.32,"chg1y":14.1,"ter":0.20,"aum":980000,"asset":"Azionario","region":"Globale","replication":"Fisica","distribution":"Accumulazione","domicile":"Irlanda","issuer":"BlackRock","rating":5,"chg5y":55.0},
+    {"isin":"IE00BDBRDM35","ticker":"EUNL","name":"iShares Core Euro STOXX 50","price":42.80,"chg1d":0.18,"chg1y":8.5,"ter":0.10,"aum":125000,"asset":"Azionario","region":"Europa","replication":"Fisica","distribution":"Accumulazione","domicile":"Irlanda","issuer":"BlackRock","rating":4,"chg5y":28.0},
+    {"isin":"IE00BDBRDM43","ticker":"EXS1","name":"iShares STOXX Europe 600","price":95.40,"chg1d":0.25,"chg1y":9.2,"ter":0.20,"aum":85000,"asset":"Azionario","region":"Europa","replication":"Fisica","distribution":"Accumulazione","domicile":"Irlanda","issuer":"BlackRock","rating":4,"chg5y":30.0},
+    {"isin":"IE00BKM4GZ66","ticker":"EMAE","name":"iShares Core MSCI EM IMI","price":32.15,"chg1d":0.85,"chg1y":6.8,"ter":0.18,"aum":145000,"asset":"Azionario","region":"Emergenti","replication":"Fisica","distribution":"Accumulazione","domicile":"Irlanda","issuer":"BlackRock","rating":4,"chg5y":18.0},
+    {"isin":"IE00BDBRDM51","ticker":"IUSN","name":"iShares MSCI World Small Cap","price":8.95,"chg1d":0.42,"chg1y":11.5,"ter":0.35,"aum":42000,"asset":"Azionario","region":"Globale","replication":"Fisica","distribution":"Accumulazione","domicile":"Irlanda","issuer":"BlackRock","rating":4,"chg5y":35.0},
+    {"isin":"IE00BDBRDM69","ticker":"IBGL","name":"iShares Euro Government Bond","price":136.20,"chg1d":-0.15,"chg1y":-2.1,"ter":0.09,"aum":185000,"asset":"Obbligazionario","region":"Europa","replication":"Fisica","distribution":"Distribuzione","domicile":"Irlanda","issuer":"BlackRock","rating":4,"chg5y":-8.0},
+    {"isin":"IE00BDBRDM77","ticker":"IEGA","name":"iShares Core Euro Gov Bond","price":128.50,"chg1d":-0.12,"chg1y":-1.8,"ter":0.12,"aum":95000,"asset":"Obbligazionario","region":"Europa","replication":"Fisica","distribution":"Accumulazione","domicile":"Irlanda","issuer":"BlackRock","rating":4,"chg5y":-6.0},
+    {"isin":"IE00BDBRDM85","ticker":"IBCI","name":"iShares Inflation Linked Govt","price":68.40,"chg1d":0.08,"chg1y":1.2,"ter":0.10,"aum":32000,"asset":"Obbligazionario","region":"Europa","replication":"Fisica","distribution":"Distribuzione","domicile":"Irlanda","issuer":"BlackRock","rating":4,"chg5y":5.0},
+    {"isin":"IE00BDBRDM93","ticker":"XAD1","name":"Xtrackers MSCI AC World","price":98.75,"chg1d":0.38,"chg1y":13.5,"ter":0.19,"aum":65000,"asset":"Azionario","region":"Globale","replication":"Fisica","distribution":"Accumulazione","domicile":"Irlanda","issuer":"DWS","rating":4,"chg5y":50.0},
+    {"isin":"IE00BDBRDM01","ticker":"XBLC","name":"Xtrackers MSCI World Momentum","price":62.30,"chg1d":0.55,"chg1y":16.2,"ter":0.30,"aum":28000,"asset":"Azionario","region":"Globale","replication":"Campionamento","distribution":"Accumulazione","domicile":"Irlanda","issuer":"DWS","rating":4,"chg5y":58.0},
+    {"isin":"IE00BDBRDM19","ticker":"Xetra-Gold","name":"Xetra-Gold","price":48.90,"chg1d":0.22,"chg1y":18.5,"ter":0.36,"aum":7800,"asset":"Commodities","region":"Globale","replication":"Fisica","distribution":"Accumulazione","domicile":"Germania","issuer":"Deutsche Borse","rating":3,"chg5y":42.0},
+    {"isin":"IE00BDBRDM27","ticker":"IUSQ","name":"iShares MSCI ACWI","price":92.40,"chg1d":0.40,"chg1y":12.8,"ter":0.20,"aum":89000,"asset":"Azionario","region":"Globale","replication":"Fisica","distribution":"Accumulazione","domicile":"Irlanda","issuer":"BlackRock","rating":5,"chg5y":51.0},
 ];
 
 const MODEL_PORTFOLIOS = [
-    { id: 'all-weather', name: 'All-Weather', author: 'Ray Dalio', philosophy: 'Bilanciato per performare in ogni scenario economico: crescita, recessione, inflazione, deflazione.', risk: 'Medio-Basso', riskLevel: 2, allocation: [{ name: 'Azioni Globali', value: 30, color: '#0A2540' }, { name: 'Treasury Lungo', value: 40, color: '#1E5AA0' }, { name: 'Treasury Medio', value: 15, color: '#5A7A9A' }, { name: 'Oro', value: 7.5, color: '#B8860B' }, { name: 'Commodities', value: 7.5, color: '#8A5A00' }], cagr: 6.8, maxDD: -12.4, sharpe: 0.82 },
-    { id: 'bogleheads', name: 'Bogleheads 3-Fund', author: 'John Bogle', philosophy: 'Semplicita ed efficienza: tre ETF, massima diversificazione, costi minimi.', risk: 'Medio', riskLevel: 3, allocation: [{ name: 'MSCI World', value: 60, color: '#0A2540' }, { name: 'Emerging Markets', value: 20, color: '#1E5AA0' }, { name: 'Aggregate Bond', value: 20, color: '#5A7A9A' }], cagr: 8.1, maxDD: -22.8, sharpe: 0.71 },
-    { id: 'permanent', name: 'Permanent Portfolio', author: 'Harry Browne', philosophy: 'Quattro asset non correlati in parti uguali. Minimalista, robusto, anti-crisi.', risk: 'Basso', riskLevel: 1, allocation: [{ name: 'Azioni', value: 25, color: '#0A2540' }, { name: 'Oro', value: 25, color: '#B8860B' }, { name: 'Bond Lungo', value: 25, color: '#1E5AA0' }, { name: 'Cash/Bond Breve', value: 25, color: '#5A7A9A' }], cagr: 5.9, maxDD: -8.2, sharpe: 0.74 },
-    { id: 'growth', name: 'Growth 90/10', author: 'Long-term aggressive', philosophy: 'Per orizzonti lunghi (20+ anni): massimizza crescita accettando alta volatilita.', risk: 'Alto', riskLevel: 4, allocation: [{ name: 'MSCI World', value: 70, color: '#0A2540' }, { name: 'Emerging Markets', value: 20, color: '#1E5AA0' }, { name: 'Aggregate Bond', value: 10, color: '#5A7A9A' }], cagr: 9.4, maxDD: -31.5, sharpe: 0.68 },
-    { id: 'coffeehouse', name: 'Coffeehouse Portfolio', author: 'Bill Schultheis', philosophy: 'Sette asset class diverse in pesi uguali tra azioni. Diversificazione smart con 40% bond.', risk: 'Medio', riskLevel: 3, allocation: [{ name: 'S&P 500 Large', value: 10, color: '#0A2540' }, { name: 'US Large Value', value: 10, color: '#1E5AA0' }, { name: 'US Small', value: 10, color: '#1E5AA0' }, { name: 'US Small Value', value: 10, color: '#6BA3E8' }, { name: 'Internazionali', value: 10, color: '#5A7A9A' }, { name: 'REITs', value: 10, color: '#B8860B' }, { name: 'Aggregate Bond', value: 40, color: '#F59E0B' }], cagr: 7.6, maxDD: -25.8, sharpe: 0.69 },
-    { id: 'golden-butterfly', name: 'Golden Butterfly', author: 'Tyler (Portfolio Charts)', philosophy: 'Bilancia crescita azionaria con oro e treasuries, privilegia small cap value. Stabile e redditizio.', risk: 'Medio-Basso', riskLevel: 2, allocation: [{ name: 'US Total Stock', value: 20, color: '#0A2540' }, { name: 'US Small Value', value: 20, color: '#1E5AA0' }, { name: 'Treasury Lungo', value: 20, color: '#5A7A9A' }, { name: 'Treasury Breve', value: 20, color: '#6BA3E8' }, { name: 'Oro', value: 20, color: '#B8860B' }], cagr: 7.2, maxDD: -13.8, sharpe: 0.85 },
-];
-
-const COMMUNITY_POSTS = [
-    { id: 1, user: 'Marco R.', avatar: 'MR', time: '3h fa', content: 'Dopo 4 anni di PAC mensile su VWCE, finalmente ho raggiunto i 50k investiti. Lezione piu grande: non guardare il portafoglio tutti i giorni.', likes: 127, comments: 34, portfolio: { cagr: 8.9, vol: 14.2, assets: 3 } },
-    { id: 2, user: 'Sara E.', avatar: 'SE', time: '1g fa', content: 'Chiedo consiglio: ha senso aggiungere un ETF sui mercati di frontiera al mio portafoglio All-World + EM? Quale peso dare?', likes: 45, comments: 28, portfolio: { cagr: 7.4, vol: 13.8, assets: 2 } },
-    { id: 3, user: 'Luca F.', avatar: 'LF', time: '2g fa', content: 'Condivido il mio portafoglio FIRE: SWDA 70%, EIMI 15%, AGGH 10%, SGLD 5%. Obiettivo indipendenza finanziaria entro il 2035.', likes: 203, comments: 67, portfolio: { cagr: 9.1, vol: 15.4, assets: 4 } },
+    {"id":"all-weather","name":"All-Weather","author":"Ray Dalio","risk":"Medio","riskLevel":3,"cagr":7.8,"maxDD":"-14.5","sharpe":0.72,"philosophy":"Asset allocation che performa in ogni condizione macroeconomica","allocation":[{"name":"Azionario","value":30,"color":"#0A2540"},{"name":"Obbligazionario","value":40,"color":"#1E5AA0"},{"name":"Oro","value":15,"color":"#D69E2E"},{"name":"Commodities","value":15,"color":"#68A063"}]},
+    {"id":"bogleheads","name":"Bogleheads 3-Fund","author":"John Bogle","risk":"Medio","riskLevel":3,"cagr":8.2,"maxDD":"-18.3","sharpe":0.68,"philosophy":"Semplicita totale: azionario globale + obbligazionario + emergenti","allocation":[{"name":"Azionario Global","value":60,"color":"#0A2540"},{"name":"Emergenti","value":20,"color":"#1E5AA0"},{"name":"Obbligazionario","value":20,"color":"#8A94A6"}]},
+    {"id":"permanent","name":"Permanent Portfolio","author":"Harry Browne","risk":"Basso","riskLevel":2,"cagr":5.4,"maxDD":"-8.1","sharpe":0.55,"philosophy":"Equa ripartizione per proteggere da ogni scenario economico","allocation":[{"name":"Azionario","value":25,"color":"#0A2540"},{"name":"Obbligazionario","value":25,"color":"#1E5AA0"},{"name":"Oro","value":25,"color":"#D69E2E"},{"name":"Cash","value":25,"color":"#8A94A6"}]},
+    {"id":"coffeehouse","name":"Coffeehouse Portfolio","author":"Bill Schultheis","risk":"Basso","riskLevel":2,"cagr":6.8,"maxDD":"-12.4","sharpe":0.62,"philosophy":"Diversificazione estrema con 10 asset class","allocation":[{"name":"Large Cap","value":10,"color":"#0A2540"},{"name":"Large Value","value":10,"color":"#1E3A5F"},{"name":"Small Cap","value":10,"color":"#1E5AA0"},{"name":"Small Value","value":10,"color":"#0F7B3F"},{"name":"REITs","value":10,"color":"#68A063"},{"name":"Gov Bond","value":10,"color":"#D69E2E"},{"name":"Corp Bond","value":10,"color":"#8A94A6"},{"name":"TIPS","value":10,"color":"#4A5568"},{"name":"Emergenti","value":10,"color":"#2D3748"},{"name":"EAFE","value":10,"color":"#061528"}]},
+    {"id":"golden","name":"Golden Butterfly","author":"Tyler","risk":"Medio-Basso","riskLevel":2,"cagr":7.1,"maxDD":"-11.2","sharpe":0.70,"philosophy":"Variante Permanent con tilt value e small cap","allocation":[{"name":"S&P 500","value":20,"color":"#0A2540"},{"name":"Small Cap Value","value":20,"color":"#1E3A5F"},{"name":"Long Gov Bond","value":20,"color":"#1E5AA0"},{"name":"Short Gov Bond","value":20,"color":"#8A94A6"},{"name":"Oro","value":20,"color":"#D69E2E"}]},
+    {"id":"growth","name":"100% Growth","author":"ETF Tracker","risk":"Alto","riskLevel":4,"cagr":10.5,"maxDD":"-28.7","sharpe":0.58,"philosophy":"Massima esposizione azionaria per obiettivi di crescita","allocation":[{"name":"Azionario Global","value":70,"color":"#0A2540"},{"name":"Small Cap","value":20,"color":"#1E3A5F"},{"name":"Emergenti","value":10,"color":"#0F7B3F"}]},
 ];
 
 const CORRELATION_MATRIX = [
-    { etf: 'SWDA', SWDA: 1.00, VWCE: 0.98, EIMI: 0.72, AGGH: 0.15, SGLD: 0.08 },
-    { etf: 'VWCE', SWDA: 0.98, VWCE: 1.00, EIMI: 0.78, AGGH: 0.18, SGLD: 0.10 },
-    { etf: 'EIMI', SWDA: 0.72, VWCE: 0.78, EIMI: 1.00, AGGH: 0.22, SGLD: 0.14 },
-    { etf: 'AGGH', SWDA: 0.15, VWCE: 0.18, EIMI: 0.22, AGGH: 1.00, SGLD: 0.31 },
-    { etf: 'SGLD', SWDA: 0.08, VWCE: 0.10, EIMI: 0.14, AGGH: 0.31, SGLD: 1.00 },
-];
-
-const ALERTS_DATA = [
-    { id: 1, etf: 'VWCE', isin: 'IE00BK5BQT80', type: 'below', threshold: 115, currentPrice: 118.22, active: true, channels: ['email', 'push'] },
-    { id: 2, etf: 'SWDA', isin: 'IE00B4L5Y983', type: 'below', threshold: 88, currentPrice: 92.45, active: true, channels: ['email'] },
-    { id: 3, etf: 'EIMI', isin: 'IE00BKM4GZ66', type: 'rebalance', threshold: 3, currentPrice: 32.18, active: true, channels: ['push'] },
-    { id: 4, etf: 'SGLD', isin: 'IE00B579F325', type: 'above', threshold: 200, currentPrice: 195.40, active: true, channels: ['email', 'push'] },
+    {"etf":"VWCE","VWCE":1.0,"IWDA":0.96,"EUNL":0.88,"EXS1":0.90,"EMAE":0.82,"IUSN":0.93,"IBGL":0.15,"IEGA":0.18,"IBCI":0.22,"XAD1":0.97,"XBLC":0.95,"Xetra-Gold":-0.08,"IUSQ":0.98},
+    {"etf":"IWDA","VWCE":0.96,"IWDA":1.0,"EUNL":0.85,"EXS1":0.87,"EMAE":0.78,"IUSN":0.91,"IBGL":0.12,"IEGA":0.15,"IBCI":0.18,"XAD1":0.99,"XBLC":0.96,"Xetra-Gold":-0.12,"IUSQ":0.97},
+    {"etf":"EUNL","VWCE":0.88,"IWDA":0.85,"EUNL":1.0,"EXS1":0.95,"EMAE":0.65,"IUSN":0.78,"IBGL":0.25,"IEGA":0.28,"IBCI":0.30,"XAD1":0.86,"XBLC":0.82,"Xetra-Gold":-0.05,"IUSQ":0.88},
+    {"etf":"EXS1","VWCE":0.90,"IWDA":0.87,"EUNL":0.95,"EXS1":1.0,"EMAE":0.70,"IUSN":0.80,"IBGL":0.22,"IEGA":0.25,"IBCI":0.28,"XAD1":0.88,"XBLC":0.84,"Xetra-Gold":-0.02,"IUSQ":0.90},
+    {"etf":"EMAE","VWCE":0.82,"IWDA":0.78,"EUNL":0.65,"EXS1":0.70,"EMAE":1.0,"IUSN":0.75,"IBGL":-0.05,"IEGA":-0.02,"IBCI":0.05,"XAD1":0.80,"XBLC":0.78,"Xetra-Gold":0.10,"IUSQ":0.83},
+    {"etf":"IUSN","VWCE":0.93,"IWDA":0.91,"EUNL":0.78,"EXS1":0.80,"EMAE":0.75,"IUSN":1.0,"IBGL":0.08,"IEGA":0.10,"IBCI":0.12,"XAD1":0.92,"XBLC":0.94,"Xetra-Gold":-0.10,"IUSQ":0.93},
+    {"etf":"IBGL","VWCE":0.15,"IWDA":0.12,"EUNL":0.25,"EXS1":0.22,"EMAE":-0.05,"IUSN":0.08,"IBGL":1.0,"IEGA":0.95,"IBCI":0.88,"XAD1":0.15,"XBLC":0.10,"Xetra-Gold":0.35,"IUSQ":0.14},
+    {"etf":"IEGA","VWCE":0.18,"IWDA":0.15,"EUNL":0.28,"EXS1":0.25,"EMAE":-0.02,"IUSN":0.10,"IBGL":0.95,"IEGA":1.0,"IBCI":0.85,"XAD1":0.18,"XBLC":0.14,"Xetra-Gold":0.32,"IUSQ":0.17},
+    {"etf":"IBCI","VWCE":0.22,"IWDA":0.18,"EUNL":0.30,"EXS1":0.28,"EMAE":0.05,"IUSN":0.12,"IBGL":0.88,"IEGA":0.85,"IBCI":1.0,"XAD1":0.22,"XBLC":0.20,"Xetra-Gold":0.38,"IUSQ":0.23},
+    {"etf":"XAD1","VWCE":0.97,"IWDA":0.99,"EUNL":0.86,"EXS1":0.88,"EMAE":0.80,"IUSN":0.92,"IBGL":0.15,"IEGA":0.18,"IBCI":0.22,"XAD1":1.0,"XBLC":0.97,"Xetra-Gold":-0.10,"IUSQ":0.99},
+    {"etf":"XBLC","VWCE":0.95,"IWDA":0.96,"EUNL":0.82,"EXS1":0.84,"EMAE":0.78,"IUSN":0.94,"IBGL":0.10,"IEGA":0.14,"IBCI":0.20,"XAD1":0.97,"XBLC":1.0,"Xetra-Gold":-0.08,"IUSQ":0.96},
+    {"etf":"Xetra-Gold","VWCE":-0.08,"IWDA":-0.12,"EUNL":-0.05,"EXS1":-0.02,"EMAE":0.10,"IUSN":-0.10,"IBGL":0.35,"IEGA":0.32,"IBCI":0.38,"XAD1":-0.10,"XBLC":-0.08,"Xetra-Gold":1.0,"IUSQ":-0.09},
+    {"etf":"IUSQ","VWCE":0.98,"IWDA":0.97,"EUNL":0.88,"EXS1":0.90,"EMAE":0.83,"IUSN":0.93,"IBGL":0.14,"IEGA":0.17,"IBCI":0.23,"XAD1":0.99,"XBLC":0.96,"Xetra-Gold":-0.09,"IUSQ":1.0},
 ];
 
 const ACADEMY_COURSES = [
-    { level: 'Base', title: "Cos'e un ETF e perche investirci", lessons: 8, duration: '45 min' },
-    { level: 'Base', title: 'Scegliere il tuo primo ETF', lessons: 6, duration: '30 min' },
-    { level: 'Intermedio', title: 'Asset allocation per obiettivi', lessons: 12, duration: '1h 20min' },
-    { level: 'Intermedio', title: 'PAC vs PIC: strategie a confronto', lessons: 9, duration: '55 min' },
-    { level: 'Avanzato', title: 'Ribilanciamento e finestre ottimali', lessons: 10, duration: '1h 15min' },
-    { level: 'Avanzato', title: 'Factor investing con ETF', lessons: 14, duration: '2h 10min' },
+    {"id":"abc-etf","title":"L'ABC degli ETF","level":"Base","duration":"3h","lessons":8},
+    {"id":"analisi-etf","title":"Analisi e Confronto","level":"Intermedio","duration":"4h","lessons":10},
+    {"id":"strategie","title":"Strategie Portafoglio","level":"Avanzato","duration":"6h","lessons":12},
+    {"id":"tassazione","title":"Tassazione e Dichiarazione","level":"Intermedio","duration":"2h","lessons":5},
+    {"id":"rischio","title":"Risk Management","level":"Avanzato","duration":"4h","lessons":7},
+    {"id":"etf-vs-fondi","title":"ETF vs Fondi vs Azioni","level":"Base","duration":"2h","lessons":4},
 ];
 
-// Portfolio history for chart generation
-function generatePortfolioHistory(months = 60) {
-    const data = [];
-    let value = 30000;
-    let benchmark = 30000;
-    for (let i = 0; i < months; i++) {
-        value = value * (1 + (0.007 + (Math.sin(i/4) * 0.004)));
-        benchmark = benchmark * (1 + (0.006 + (Math.cos(i/5) * 0.003)));
-        const d = new Date(2021, i, 1);
-        data.push({
-            month: d.toLocaleDateString('it-IT', { month: 'short', year: '2-digit' }),
-            portfolio: Math.round(value),
-            benchmark: Math.round(benchmark)
-        });
-    }
-    return data;
-}
-
-function generatePriceHistory(months = 48, basePrice = 72) {
-    const data = [];
-    let price = basePrice;
-    for (let i = 0; i < months; i++) {
-        price = price * (1 + (0.005 + Math.sin(i/3) * 0.008 + Math.cos(i/7) * 0.004));
-        const d = new Date(2022, i, 1);
-        data.push({
-            month: d.toLocaleDateString('it-IT', { month: 'short', year: '2-digit' }),
-            price: Math.round(price * 100) / 100
-        });
-    }
-    return data;
-}
-
-function generateBacktestData(range = '10Y') {
-    const mapping = { '1Y': 12, '3Y': 36, '5Y': 60, '10Y': 120 };
-    const n = mapping[range] || 120;
-    const data = [];
-    for (let i = 0; i < n; i++) {
-        const t = i / 12;
-        data.push({
-            month: `'${14 + Math.floor(t)}`,
-            myPortfolio: Math.round(10000 * Math.pow(1.084, t) + Math.sin(i/3) * 600),
-            allWeather: Math.round(10000 * Math.pow(1.068, t) + Math.sin(i/4) * 350),
-            benchmark: Math.round(10000 * Math.pow(1.075, t) + Math.sin(i/3.5) * 800)
-        });
-    }
-    return data;
-}
-
-// Manual content (key chapters)
 const MANUAL_MODULES = [
-    {
-        id: 'etf', title: 'Gli ETF', subtitle: "Tutto quello che devi sapere prima di comprarne uno",
-        color: '#1E5AA0', icon: 'pie-chart',
-        chapters: [
-            { id: 'etf-1', num: 1, title: "Cos'e davvero un ETF", readTime: '6 min' },
-            { id: 'etf-2', num: 2, title: 'Replica fisica vs sintetica', readTime: '5 min' },
-            { id: 'etf-3', num: 3, title: 'I costi: TER, spread, commissioni', readTime: '7 min' },
-            { id: 'etf-4', num: 4, title: 'Accumulazione vs distribuzione', readTime: '5 min' },
-            { id: 'etf-5', num: 5, title: 'Come leggere il KID', readTime: '8 min' },
-            { id: 'etf-6', num: 6, title: 'Liquidita, AUM e tracking error', readTime: '6 min' },
-            { id: 'etf-7', num: 7, title: 'UCITS, domicilio, hedging valutario', readTime: '7 min' },
-            { id: 'etf-8', num: 8, title: 'Gli errori piu comuni nella scelta', readTime: '6 min' },
-        ]
-    },
-    {
-        id: 'portfolio', title: 'Costruire il portafoglio',
-        subtitle: "L'arte di mettere insieme tanti pezzi per un risultato coerente",
-        color: '#0F7B3F', icon: 'briefcase',
-        chapters: [
-            { id: 'pf-1', num: 1, title: 'Prima di tutto: obiettivi, orizzonte, fondo emergenza', readTime: '8 min' },
-            { id: 'pf-2', num: 2, title: 'Asset allocation: il 90% del risultato', readTime: '9 min' },
-            { id: 'pf-3', num: 3, title: 'Rischio: volatilita e drawdown spiegati', readTime: '7 min' },
-            { id: 'pf-4', num: 4, title: 'Diversificazione e correlazione', readTime: '6 min' },
-            { id: 'pf-5', num: 5, title: 'PAC vs PIC: confronto numerico', readTime: '8 min' },
-            { id: 'pf-6', num: 6, title: 'Quanti ETF servono davvero', readTime: '5 min' },
-            { id: 'pf-7', num: 7, title: 'Ribilanciamento: quando e come', readTime: '7 min' },
-            { id: 'pf-8', num: 8, title: 'Psicologia: i bias che ti rovineranno', readTime: '9 min' },
-        ]
-    }
+    {"id":"mod0","title":"Modulo 0: Premessa","subtitle":"Prima di cominciare","icon":"book-open","color":"#E8EEF3","chapters":[
+        {"id":"ch0-1","num":"0.1","title":"Per chi e questo manuale","readTime":"3 min"},
+        {"id":"ch0-2","num":"0.2","title":"Come usare questa guida","readTime":"2 min"},
+    ]},
+    {"id":"mod1","title":"Modulo 1: Fondamenti","subtitle":"Dalle basi alla scelta","icon":"layers","color":"#E0EDFF","chapters":[
+        {"id":"ch1-1","num":"1.1","title":"Cos'e un ETF","readTime":"5 min"},
+        {"id":"ch1-2","num":"1.2","title":"Replica fisica vs sintetica","readTime":"4 min"},
+        {"id":"ch1-3","num":"1.3","title":"TER, NAV e Tracking Error","readTime":"6 min"},
+        {"id":"ch1-4","num":"1.4","title":"Scegliere il giusto ETF","readTime":"7 min"},
+        {"id":"ch1-5","num":"1.5","title":"Dove acquistare","readTime":"5 min"},
+    ]},
+    {"id":"mod2","title":"Modulo 2: Pratica","subtitle":"Dalla teoria al portafoglio","icon":"pie-chart","color":"#E6F4EC","chapters":[
+        {"id":"ch2-1","num":"2.1","title":"Costruire il primo portafoglio","readTime":"8 min"},
+        {"id":"ch2-2","num":"2.2","title":"Asset Allocation","readTime":"10 min"},
+        {"id":"ch2-3","num":"2.3","title":"PAC vs PIC","readTime":"6 min"},
+        {"id":"ch2-4","num":"2.4","title":"Ribilanciamento","readTime":"7 min"},
+        {"id":"ch2-5","num":"2.5","title":"Tassazione in Italia","readTime":"9 min"},
+        {"id":"ch2-6","num":"2.6","title":"Dichiarazione redditi","readTime":"8 min"},
+    ]},
 ];
 
-// Chapter summaries for display
 const CHAPTER_SUMMARIES = {
-    'etf-1': { title: "Cos'e davvero un ETF", keyPoints: ["Un ETF e un fondo negoziato in borsa che contiene molti titoli in una sola quota", "Replica un indice in modo passivo e trasparente", "Costi molto piu bassi dei fondi attivi: tipicamente 0.10-0.30% annuo", "Diversificazione immediata con una singola operazione", "Si compra e vende in borsa come un'azione, in tempo reale"] },
-    'etf-2': { title: 'Replica fisica vs sintetica', keyPoints: ["Fisica: l'ETF possiede davvero i titoli dell'indice", "Sintetica: usa uno swap con una banca per ottenere il rendimento", "Il 95% degli ETF UCITS europei e fisico", "Sintetico puo avere vantaggi fiscali sui dividendi USA", "Rischio controparte limitato al 10% per normativa UCITS"] },
-    'etf-3': { title: 'I costi: TER, spread, commissioni', keyPoints: ['TER: costo annuo di gestione, il piu importante', 'Spread bid-ask: costo ad ogni operazione', 'Commissioni broker: variabili da 0 a 20+ euro', 'Su 30 anni, 1% di costi extra puo costare oltre 100.000 euro', 'Scegli broker con commissioni basse sui PAC'] },
-    'etf-4': { title: 'Accumulazione vs distribuzione', keyPoints: ['ACC reinvesta automaticamente i dividendi', 'DIST te li gira sul conto', 'In Italia: 26% tasse sui dividendi DIST subito, sulle plusvalenze ACC solo alla vendita', 'Su 30 anni, ACC puo generare 10-15% di patrimonio in piu', 'In fase di accumulo: preferisci ACC'] },
-    'pf-1': { title: 'Prima di tutto: obiettivi, orizzonte, fondo emergenza', keyPoints: ['Definisci obiettivo, orizzonte temporale e importo target', 'Piu lungo e l orizzonte, piu rischio puoi prenderti', 'Sotto i 5 anni, evita investimenti azionari', 'Il fondo emergenza (3-6 mesi di spese) viene prima degli ETF', 'Tieni il fondo emergenza in un conto deposito liquido'] },
-    'pf-2': { title: 'Asset allocation: il 90% del risultato', keyPoints: ["L'asset allocation spiega oltre il 90% del risultato", 'Ripartire tra azioni/bond/altro conta piu della scelta del singolo ETF', 'Regola del 110 meno l eta come punto di partenza', 'Le obbligazioni servono a ridurre volatilita e drawdown', "L'allocazione strategica e fissa: si ribilancia, non si stravolge"] },
+    "ch1-1": {"title":"Cos'e un ETF","keyPoints":["ETF = Exchange Traded Fund: fondo negoziato in borsa","Traccia un indice (es. MSCI World) in modo passivo","Diversificazione implicita in un singolo titolo","Costi bassi (TER 0.05%-0.50%) vs fondi attivi (1-2%)","Liquidita: compra/vendi in tempo reale come un azione"]},
+    "ch1-2": {"title":"Replica fisica vs sintetica","keyPoints":["Replica fisica: detiene davvero i titoli dell indice","Replica sintetica: usa swap con una controparte","Campione: replica fisica su sottoinsieme di titoli","Fisica = trasparenza maggiore, costi leggermente superiori","Sintetica = tracking error minore ma rischio controparte"]},
+    "ch1-3": {"title":"TER, NAV e Tracking Error","keyPoints":["TER = Total Expense Ratio: costo annuo sul patrimonio","NAV = Net Asset Value: valore rezzo del fondo","Tracking Error = scostamento tra rendimento ETF e indice","Premiums/Discounts: NAV vs prezzo di mercato","Costi impliciti: swap fee, lending revenue, tasse"]},
+    "ch2-1": {"title":"Costruire il primo portafoglio","keyPoints":["Inizia con 1-3 ETF massimo per semplicita","Core-satellite: 70-80% core globale, 20-30% tematici","Ottieni esposizione a migliaia di titoli con pochi ETF","Considera la tua propensione al rischio e orizzonte","Investi solo capitale che non ti serve a breve termine"]},
+    "ch2-2": {"title":"Asset Allocation","keyPoints":["Allocazione = come dividi il capitale tra asset class","Rule of 100: 100 - eta = % azionario (approssimativo)","Diversificazione tra geografie, settori, dimensioni","Rebalancing: riporta le % ai target a intervalli regolari","L'asset allocation spiega il 90% della performance"]},
 };
