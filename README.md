@@ -1,131 +1,168 @@
-# ETF Tracker
+# ETF Tracker - Plug & Play
 
-**ETF Tracker** e un'applicazione web completa per la gestione, analisi e simulazione di portafogli ETF. Costruita con Python Flask e JavaScript vanilla, offre tutto cio che serve per investire consapevolmente.
+**ETF Tracker** e un'applicazione web completa per la gestione, analisi e simulazione di portafogli ETF. Architettura plug-and-play con database SQLite integrato, autenticazione JWT, generazione PDF/PPTX e invio email.
 
 ## Funzionalita
 
-- **Dashboard** - Riepilogo del portafoglio con KPI, grafici di andamento e allocazione per asset class
-- **Ricerca ETF** - Cerca e filtra tra centinaia di ETF, confronta fino a 3 titoli contemporaneamente
-- **Analisi** - Backtest storico, matrice di correlazione, volatilita, max drawdown e Sharpe ratio
-- **Simulazioni** - Confronto PAC vs PIC con calcolo del potere del cost averaging
-- **Portafogli Modello** - Strategie classiche (All-Weather, Bogleheads, Permanent Portfolio, ecc.)
-- **Community** - Condividi strategie e interagisci con altri investitori
-- **Manuale e Academy** - Guide dall'ABC degli ETF all'asset allocation avanzata
-- **Alert Prezzo** - Notifiche personalizzabili su soglie di prezzo
-- **Impostazioni** - Profilo, notifiche, preferenze, sicurezza e gestione dati
-- **Onboarding** - Wizard iniziale per personalizzare l'esperienza
-- **Tour Guidato** - Introduzione interattiva alle funzionalita principali
+- **Autenticazione** - Registrazione/Login con JWT, password hash PBKDF2
+- **Onboarding** - Wizard 3 passi con salvataggio risposte nel database
+- **Tour Guidato** - Introduzione interattiva 6 step
+- **Dashboard** - KPI reali dal DB, grafici andamento, allocazione, tabella posizioni
+- **Ricerca ETF** - Filtri multipli, confronto fino a 3 ETF
+- **Analisi** - Backtest, matrice correlazione, metriche di rischio
+- **Simulazioni** - PAC vs PIC con calcolo interattivo
+- **Portafogli Modello** - 6 strategie classiche
+- **Community** - Bacheca con post persistenti nel DB
+- **Manuale/Academy** - Moduli e capitoli formativi
+- **Alert** - Soglie prezzo con persistenza DB
+- **Report PDF/PPTX** - Generazione automatica con download
+- **Email** - Invio report PDF/PPTX via SMTP
+- **Impostazioni** - Profilo, notifiche, preferenze
 
 ## Tecnologie
 
 **Backend:**
-- Python 3.11+
-- Flask
-- Flask-CORS
-- Gunicorn (WSGI server di produzione)
+- Python 3.11+ / Flask / Flask-CORS
+- SQLite (file-based, zero-config)
+- PBKDF2 password hashing
+- JWT stateless tokens
+- Email SMTP (Gmail/Outlook/etc.)
+- PDF: WeasyPrint + ReportLab fallback
+- PPTX: python-pptx
 
 **Frontend:**
-- HTML5 / CSS3 / JavaScript (ES6+)
-- Chart.js per i grafici
-- LocalStorage per la persistenza client-side
+- Vanilla JavaScript SPA
+- Chart.js 4.4.1
+- CSS3 con variabili e media queries
+- REST API con Bearer token
 
-## Requisiti
+## Installazione (Plug & Play)
 
-- Python 3.11 o superiore
-- pip
-
-## Installazione Locale
-
-1. Clona il repository:
 ```bash
+# 1. Clona
 git clone https://github.com/tuo-username/etf-tracker.git
 cd etf-tracker
-```
 
-2. Crea un virtual environment:
-```bash
-python -m venv venv
-source venv/bin/activate  # Linux/Mac
-# oppure
-venv\Scripts\activate  # Windows
-```
-
-3. Installa le dipendenze:
-```bash
+# 2. Installa dipendenze
 pip install -r requirements.txt
-```
 
-4. Avvia l'applicazione:
-```bash
+# 3. Avvia (zero configurazione!)
 python app.py
+
+# 4. Apri http://localhost:5000
 ```
 
-5. Apri il browser all'indirizzo `http://localhost:5000`
+## Configurazione Email (opzionale)
+
+Per abilitare l'invio email con report PDF/PPTX:
+
+```bash
+# Esporta variabili d'ambiente
+export SMTP_HOST=smtp.gmail.com
+export SMTP_PORT=587
+export SMTP_USER=tua-email@gmail.com
+export SMTP_PASS=tua-app-password
+export FROM_EMAIL=tua-email@gmail.com
+```
+
+O crea un file `.env` nella stessa cartella:
+```
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=tua-email@gmail.com
+SMTP_PASS=tua-app-password
+FROM_EMAIL=tua-email@gmail.com
+```
 
 ## Deploy su Render
 
-### Metodo 1: Blueprint (consigliato)
-
-1. Carica il codice su GitHub
-2. Crea un nuovo **Web Service** su Render
-3. Collega il repository GitHub
-4. Render rilevera automaticamente il file `render.yaml` e configurera il servizio
-
-### Metodo 2: Manuale
-
 1. Crea un nuovo **Web Service** su Render
-2. Scegli **Python 3** come runtime
-3. Configura:
-   - **Build Command**: `pip install -r requirements.txt`
-   - **Start Command**: `gunicorn app:app`
-4. Aggiungi la variabile d'ambiente:
-   - `SECRET_KEY`: una stringa casuale di almeno 32 caratteri
-   - `PYTHON_VERSION`: `3.11.0`
+2. Collega il repository GitHub
+3. Render rilevera automaticamente `render.yaml`:
+   - Build: `pip install -r requirements.txt`
+   - Start: `gunicorn app:app`
+4. Aggiungi variabile d'ambiente `SECRET_KEY` (32+ caratteri casuali)
+5. Aggiungi variabili SMTP opzionali per l'email
 
 ## Struttura del Progetto
 
 ```
 etf-tracker/
-|-- app.py              # Backend Flask con API REST
-|-- requirements.txt    # Dipendenze Python
-|-- Procfile            # Configurazione processo Render
-|-- render.yaml         # Blueprint Render
-|-- README.md           # Questo file
+|-- app.py                  # Flask backend + API REST + DB + Email + Reports
+|-- requirements.txt        # Dipendenze Python
+|-- Procfile               # Config Render
+|-- render.yaml            # Blueprint Render
+|-- .gitignore             # Esclusioni Git
+|-- README.md              # Questo file
+|-- reports/               # Report PDF/PPTX generati
 |-- templates/
-|   '-- index.html      # Template HTML principale
+|   '-- index.html         # Template base con CSS critico inline
 '-- static/
-    |-- css/
-    |   '-- style.css   # Foglio di stile completo
-    '-- js/
-        |-- data.js     # Dati statici (ETF, portafogli, ecc.)
-        |-- utils.js    # Funzioni di utilita e icone
-        |-- charts.js   # Wrapper Chart.js
-        '-- app.js      # Logica SPA principale
+    |-- css/style.css      # Foglio di stile completo
+    |-- js/data.js         # Dati statici (ETF, modelli, academy)
+    |-- js/utils.js        # Utilita, formattazione, icone SVG
+    |-- js/charts.js       # Wrapper Chart.js
+    '-- js/app.js          # SPA principale con API REST
 ```
 
-## Dati
+## Database Schema (SQLite)
 
-L'applicazione include un database statico di **13 ETF** reali con:
-- Dati di prezzo e performance (1D, 1Y, 5Y)
-- Informazioni dettagliate (TER, AUM, replica, distribuzione)
-- **6 portafogli modello** con allocazione e metriche storiche
-- **6 corsi Academy** e **16 capitoli** del manuale formativo
+| Tabella | Descrizione |
+|---------|-------------|
+| `users` | Account utente, password hash, onboarding |
+| `portfolios` | Portafogli creati dall'utente |
+| `holdings` | Posizioni ETF (quote, prezzo medio) |
+| `alerts` | Alert prezzo con soglie e canali |
+| `settings` | Preferenze utente (key-value) |
+| `reports` | Report generati (PDF/PPTX) |
+| `community_posts` | Post della community |
 
-I dati del portafoglio utente vengono salvati in **LocalStorage** (lato client).
+## API Endpoints
 
-## Autenticazione
+| Endpoint | Metodo | Descrizione |
+|----------|--------|-------------|
+| `/api/auth/register` | POST | Crea account |
+| `/api/auth/login` | POST | Login e ottieni token |
+| `/api/auth/me` | GET | Info utente corrente |
+| `/api/auth/onboarding` | POST | Salva risposte onboarding |
+| `/api/portfolios` | GET/POST | Lista / Crea portafoglio |
+| `/api/portfolios/:id/holdings` | POST | Aggiungi posizione |
+| `/api/holdings/:id` | DELETE | Rimuovi posizione |
+| `/api/alerts` | GET/POST | Lista / Crea alert |
+| `/api/alerts/:id` | PATCH/DELETE | Toggle / Elimina alert |
+| `/api/settings` | GET/PUT | Leggi / Salva impostazioni |
+| `/api/reports/generate` | POST | Genera PDF/PPTX |
+| `/api/reports/download/:id` | GET | Scarica report |
+| `/api/reports/email` | POST | Invia report via email |
+| `/api/community/posts` | GET/POST | Bacheca community |
+| `/api/data/etfs` | GET | Lista ETF statica |
+| `/api/data/models` | GET | Portafogli modello |
 
-Il sistema supporta:
-- Login con email e password
-- Login sociale (Google)
-- Sessione persistente via LocalStorage
+## Report Automatici
 
-In modalita demo, l'autenticazione e simulata lato client per semplicita di deploy.
+### PDF
+Generato via HTML -> WeasyPrint (se installato) altrimenti ReportLab fallback. Include:
+- Cover con nome utente e data
+- KPI: Valore totale, Investito, P&L
+- Tabella posizioni con prezzi e P&L
+
+### PPTX
+Generato via python-pptx. Include:
+- Slide titolo con branding ETF Tracker
+- Slide KPI con card colorate
+- Slide tabella posizioni
+
+### Email
+Invia email HTML con riepilogo KPI + allegato PDF/PPTX. Richiede configurazione SMTP.
+
+## Sicurezza
+- Password: PBKDF2-HMAC-SHA256 con 100k iterazioni
+- Token: JWT firmato con HMAC-SHA256, scadenza 7 giorni
+- SQL Injection: protetto da parametrizzazione SQLite
+- CORS: abilitato per frontend
 
 ## Licenza
-
-MIT License - vedi file LICENSE per i dettagli.
+MIT License
 
 ## Disclaimer
-
-ETF Tracker e uno strumento di analisi e non costituisce consulenza finanziaria. Gli investimenti in ETF comportano rischi, inclusa la possibile perdita del capitale. Sempre consultare un consulente finanziario qualificato prima di prendere decisioni di investimento.
+ETF Tracker e uno strumento di analisi e non costituisce consulenza finanziaria. Gli investimenti comportano rischi, inclusa la possibile perdita del capitale.
